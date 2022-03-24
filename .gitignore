@@ -7,7 +7,6 @@
 # iml files
 *.iml
 *bin/
-*dist/
 
 # BlueJ files
 *.ctxt
@@ -20,7 +19,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear

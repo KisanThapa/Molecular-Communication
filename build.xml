@@ -3,57 +3,57 @@
     <description>
         Runs the Molecular Communication Simulation
     </description>
-  <!-- set global properties for this build -->
-  <property name="src" location="src"/>
-  <property name="build" location="bin"/>
-  <property name="dist"  location="dist"/>
+    <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="bin"/>
+    <property name="dist" location="dist"/>
 
-  <target name="init">
-    <!-- Create the time stamp -->
-    <tstamp/>
-    <!-- Create the build directory structure used by compile -->
-    <mkdir dir="${build}"/>
-  </target>
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+    </target>
 
-  <target name="compile" depends="init"
-        description="compile the source " >
-    <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}" debug="on"/>
-  </target>
+    <target name="compile" depends="init"
+            description="compile the source ">
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}" destdir="${build}" debug="on"/>
+    </target>
 
-  <target name="dist" depends="compile"
-        description="generate the distribution" >
-    <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/"/>
+    <target name="dist" depends="compile"
+            description="generate the distribution">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist}/"/>
 
-    <!-- Put everything in ${build} into the MolComSim.jar file -->
-    <jar jarfile="${dist}/MolComSim.jar" basedir="${build}">
-    	<manifest>
-      		<attribute name="Main-Class" value="MolComSim"/>
-    	</manifest>
-  	</jar>
-  	
-  	<!-- and make the BatchFileCollator.jar file -->
-    <jar jarfile="${dist}/BatchFileCollator.jar" basedir="${build}">
-    	<manifest>
-      		<attribute name="Main-Class" value="batchfilecollator.BatchFileCollator"/>
-    	</manifest>
-  	</jar>
-  	
-  </target>
+        <!-- Put everything in ${build} into the MolComSim.jar file -->
+        <jar jarfile="${dist}/MolComSim.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="MolComSim"/>
+            </manifest>
+        </jar>
 
-  <target name="run" depends = "clean, dist">
-    <java jar="dist/MolComSim.jar" fork="true"/>
-  </target>
+        <!-- and make the BatchFileCollator.jar file -->
+        <jar jarfile="${dist}/BatchFileCollator.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="batchfilecollator.BatchFileCollator"/>
+            </manifest>
+        </jar>
 
-  <target name="run-collator" depends = "clean, dist">
-    <java jar="dist/BatchFileCollator.jar" fork="true"/>
-  </target>
+    </target>
 
-  <target name="clean"
-        description="clean up" >
-    <!-- Delete the ${build} and ${dist} directory trees -->
-    <delete dir="${build}"/>
-    <delete dir="${dist}"/>
-  </target>
+    <target name="run" depends="clean, dist">
+        <java jar="dist/MolComSim.jar" fork="true"/>
+    </target>
+
+    <target name="run-collator" depends="clean, dist">
+        <java jar="dist/BatchFileCollator.jar" fork="true"/>
+    </target>
+
+    <target name="clean"
+            description="clean up">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
 </project>

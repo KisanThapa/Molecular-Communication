@@ -1,63 +1,62 @@
 /**
- *  Molecule class represents a generic molecule
- *  in the molecular communication simulation
- *  Contains information necessary for moving
- *  the molecule through the medium
- *
+ * Molecule class represents a generic molecule
+ * in the molecular communication simulation
+ * Contains information necessary for moving
+ * the molecule through the medium
  */
 
 public abstract class Molecule {
 
-	private Position position;
-	private MovementController movementController;
-	protected MolComSim simulation;
-	private MoleculeMovementType moleculeMovementType;
-	//Id of the message a molecule carries - null for noise molecules
-	protected Integer msgId;
+    protected MolComSim simulation;
+    //Id of the message a molecule carries - null for noise molecules
+    protected Integer msgId;
+    private Position position;
+    private MovementController movementController;
+    private final MoleculeMovementType moleculeMovementType;
 
-	protected Molecule(MovementController mc, Position psn, MolComSim sim, MoleculeMovementType molMvType) {
-		this.movementController = mc;
-		this.position = psn;
-		this.simulation = sim;
-		this.moleculeMovementType = molMvType; 
-	}
-	
-	protected Molecule(Position psn, MolComSim sim, MoleculeMovementType molMvType) {
-		this.movementController = null;
-		this.position = psn;
-		this.simulation = sim;
-		this.moleculeMovementType = molMvType;
-	}
-	
-	//Moves the molecule as defined by its movementController
-	public abstract void move();
+    protected Molecule(MovementController mc, Position psn, MolComSim sim, MoleculeMovementType molMvType) {
+        this.movementController = mc;
+        this.position = psn;
+        this.simulation = sim;
+        this.moleculeMovementType = molMvType;
+    }
 
-	public Position getPosition() {
-		return position;
-	}
+    protected Molecule(Position psn, MolComSim sim, MoleculeMovementType molMvType) {
+        this.movementController = null;
+        this.position = psn;
+        this.simulation = sim;
+        this.moleculeMovementType = molMvType;
+    }
 
-	public void setMovementController(MovementController mc) {
-		this.movementController = mc;
-	}
+    //Moves the molecule as defined by its movementController
+    public abstract void move();
 
-	public MolComSim getSimulation() {
-		return simulation;
-	}
+    public Position getPosition() {
+        return position;
+    }
 
-	public MovementController getMovementController() {
-		return movementController;
-	}
-	
-	protected void setPosition(Position p) {
-		this.position = p;
-	}
+    protected void setPosition(Position p) {
+        this.position = p;
+    }
 
-	public MoleculeMovementType getMoleculeMovementType() {
-		return moleculeMovementType;
-	}
-	
-	public Integer getMsgId(){
-		return this.msgId;
-	}
+    public MolComSim getSimulation() {
+        return simulation;
+    }
+
+    public MovementController getMovementController() {
+        return movementController;
+    }
+
+    public void setMovementController(MovementController mc) {
+        this.movementController = mc;
+    }
+
+    public MoleculeMovementType getMoleculeMovementType() {
+        return moleculeMovementType;
+    }
+
+    public Integer getMsgId() {
+        return this.msgId;
+    }
 
 }
