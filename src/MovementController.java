@@ -5,9 +5,9 @@
 
 public abstract class MovementController {
 
-    protected MolComSim simulation;
     private final CollisionHandler collisionHandler;
     private final Molecule molecule;
+    protected MolComSim simulation;
 
     protected MovementController(CollisionHandler collHandle, MolComSim sim, Molecule mol) {
         collisionHandler = collHandle;

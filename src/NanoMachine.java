@@ -25,13 +25,14 @@ public class NanoMachine {
         this.radius = r;
     }
 
-    /** Make this NanoMachine a Transmitter only
+    /**
+     * Make this NanoMachine a Transmitter only
      *
-     * @param position Where the NanoMachine is located
-     * @param radius The radius of the NanoMachine
+     * @param position      Where the NanoMachine is located
+     * @param radius        The radius of the NanoMachine
      * @param molReleasePsn Position inside the transmitter at which point new molecules are released (created)
-     * @param mpl The parameters for the molecules the Nanomachine will transmit
-     * @param sim The simulation in which this is taking place
+     * @param mpl           The parameters for the molecules the Nanomachine will transmit
+     * @param sim           The simulation in which this is taking place
      * @return The resulting transmitter-only nanomachine
      */
     public static NanoMachine createTransmitter(Position position, int radius, Position molReleasePsn, ArrayList<MoleculeParams> mpl, MolComSim sim) {
@@ -41,13 +42,14 @@ public class NanoMachine {
         return retVal;
     }
 
-    /** Make this NanoMachine a Receiver only
+    /**
+     * Make this NanoMachine a Receiver only
      *
-     * @param position Where the NanoMachine is located
-     * @param radius The radius of the NanoMachine
+     * @param position      Where the NanoMachine is located
+     * @param radius        The radius of the NanoMachine
      * @param molReleasePsn Position inside the transmitter at which point new molecules are released (created)
-     * @param mpl The parameters for the molecules the Nanomachine will receive
-     * @param sim The simulation in which this is taking place
+     * @param mpl           The parameters for the molecules the Nanomachine will receive
+     * @param sim           The simulation in which this is taking place
      * @return The resulting receiver-only nanomachine
      */
     public static NanoMachine createReceiver(Position position, int radius, Position molReleasePsn, ArrayList<MoleculeParams> mpl, MolComSim sim) {
@@ -57,15 +59,16 @@ public class NanoMachine {
         return retVal;
     }
 
-    /** Make this NanoMachine a Transmitter and Receiver
+    /**
+     * Make this NanoMachine a Transmitter and Receiver
      *
-     * @param position Where the NanoMachine is located
-     * @param radius The radius of the NanoMachine
+     * @param position          Where the NanoMachine is located
+     * @param radius            The radius of the NanoMachine
      * @param infoMolReleasePsn Position inside the transmitter at which point new info molecules are released (created)
-     * @param ackMolReleasePsn Position inside the transmitter at which point new acko molecules are released (created)
-     * @param mpl The parameters for the molecules the Nanomachine will transmit and receive
+     * @param ackMolReleasePsn  Position inside the transmitter at which point new acko molecules are released (created)
+     * @param mpl               The parameters for the molecules the Nanomachine will transmit and receive
      * @param ackParams
-     * @param sim The simulation in which this is taking place
+     * @param sim               The simulation in which this is taking place
      * @return The resulting transmitter-receiver nanomachine
      */
     public static NanoMachine createIntermediateNode(Position position, int radius,
@@ -102,8 +105,9 @@ public class NanoMachine {
         }
     }
 
-    /** Receives molecule by either transmitter or receiver,
-     *  depending on type of molecule
+    /**
+     * Receives molecule by either transmitter or receiver,
+     * depending on type of molecule
      *
      * @param m Molecule being received
      */
@@ -156,24 +160,21 @@ public class NanoMachine {
 
     /**
      * Inner class that enables NanoMachine to transmit
-     *  information molecules
-     *
+     * information molecules
      */
     public static class Transmitter {
 
         private final MolComSim simulation;
-        private int currMsgId = 1;
-        private int retransmissionsLeft;
         private final MoleculeCreator moleculeCreator;
         private final NanoMachine nanoMachine;
-        private int countdown;
-        private boolean createMoleculesDelayed = false;
         private final Position molReleasePsn;
-
         // for intermediate nodes, track the messages we have retransmitted so we
         // do not retransmit the same message multiple times.
         private final ArrayList<Integer> msgsRetransmitted = new ArrayList<>();
-
+        private int currMsgId = 1;
+        private int retransmissionsLeft;
+        private int countdown;
+        private boolean createMoleculesDelayed = false;
         // To track communication status for adaptive change
         private int lastCommunicationStatus = NO_PREVIOUS_COMMUNICATION; // TODO: should really be an enumerated type
 
@@ -191,7 +192,7 @@ public class NanoMachine {
         }
 
         /**
-         *  Creates molecules for this transmitter
+         * Creates molecules for this transmitter
          */
         public void createMolecules() {
             moleculeCreator.createMolecules(lastCommunicationStatus);
@@ -288,20 +289,18 @@ public class NanoMachine {
     public static class Receiver {
 
         private final MolComSim simulation;
-        private int currMsgId;
-        private int retransmissionsLeft;
-        private MoleculeCreator moleculeCreator;
         private final NanoMachine nanoMachine;
-        private int countdown;
-        private boolean createMoleculesDelayed = false;
         private final Position molReleasePsn;
-        private boolean neverReceivedAnyInfoMols = true; // Prevent receiver from timing out and sending acknowledgements
-        // before receiving anything.
-
         // for intermediate nodes, track the messages we have retransmitted so we
         // do not retransmit the same message multiple times.
         private final ArrayList<Integer> msgsRetransmitted = new ArrayList<>();
-
+        private int currMsgId;
+        private int retransmissionsLeft;
+        private MoleculeCreator moleculeCreator;
+        private int countdown;
+        private boolean createMoleculesDelayed = false;
+        // before receiving anything.
+        private boolean neverReceivedAnyInfoMols = true; // Prevent receiver from timing out and sending acknowledgements
         // To track communication status for adaptive change
         private int lastCommunicationStatus = NO_PREVIOUS_COMMUNICATION;
 
@@ -322,7 +321,7 @@ public class NanoMachine {
         }
 
         /**
-         *  Creates molecules for this receiver
+         * Creates molecules for this receiver
          */
         public void createMolecules() {
             moleculeCreator.createMolecules(lastCommunicationStatus);

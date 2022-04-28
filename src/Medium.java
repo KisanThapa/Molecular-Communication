@@ -30,7 +30,9 @@ public class Medium {
         grid.put(garbageSpot, new ArrayList<Object>());
     }
 
-    /** Populate itself with noise molecules*/
+    /**
+     * Populate itself with noise molecules
+     */
     public void createMolecules() {
         mCreator.createMolecules();
     }

@@ -16,15 +16,16 @@ public class SimulationParams {
     // movement defaults to be used if movement type not specified in the params file.
     private static final HashMap<MoleculeType, MoleculeMovementType> movementDefaults =
             new HashMap<MoleculeType, MoleculeMovementType>();
+    private final ArrayList<NanoMachineParam> transmitterParams = new ArrayList<>();
+    private final ArrayList<NanoMachineParam> receiverParams = new ArrayList<>();
+    private final ArrayList<IntermediateNodeParam> intermediateNodeParams = new ArrayList<>();
+    private final ArrayList<MicrotubuleParams> microtubuleParams = new ArrayList<MicrotubuleParams>();
+    private final ArrayList<MoleculeParams> moleculeParams = new ArrayList<MoleculeParams>();
     private String paramsFileName = "input0.dat";
     private int mediumLength = 100;
     private int mediumWidth = 100;
     private int mediumHeight = 100;
     private String outputFileName = null;
-    private final ArrayList<NanoMachineParam> transmitterParams = new ArrayList<>();
-    private final ArrayList<NanoMachineParam> receiverParams = new ArrayList<>();
-    private final ArrayList<IntermediateNodeParam> intermediateNodeParams = new ArrayList<>();
-    private final ArrayList<MicrotubuleParams> microtubuleParams = new ArrayList<MicrotubuleParams>();
     private int numMessages = 1;
     private int maxNumSteps = 100000;
     private int numRetransmissions = 0;
@@ -32,7 +33,6 @@ public class SimulationParams {
     private boolean useCollisions = true;
     private boolean decomposing = false;
     private boolean useAcknowledgements = true;
-    private final ArrayList<MoleculeParams> moleculeParams = new ArrayList<MoleculeParams>();
     private int molRandMoveX = 1;
     private int molRandMoveY = 1;
     private int molRandMoveZ = 1;

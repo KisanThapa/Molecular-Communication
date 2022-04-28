@@ -12,9 +12,11 @@ public class DiffusiveRandomMovementController extends MovementController {
         super(collHandle, sim, mol);
     }
 
-    /** Randomly selects where to move molecule based on simulation step length parameters
-     *  @param molecule The molecule to move
-     *  @return the position to move to
+    /**
+     * Randomly selects where to move molecule based on simulation step length parameters
+     *
+     * @param molecule The molecule to move
+     * @return the position to move to
      */
     protected Position decideNextPosition() {
         //Randomly decide the next position based on current position + some delta.

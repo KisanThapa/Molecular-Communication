@@ -9,6 +9,8 @@ public class MolComSim {
     private static final boolean APPEND_TO_FILE = true; // used to set the append field for FileWriter to write out to the
     //This instance of the Molecular Communication Simulation
     static MolComSim molComSim;
+    //jj
+    private final ArrayList<Molecule> m = new ArrayList<Molecule>();
     //Parameters for this simulation instance and a reader for it
     private FileReader paramsFile;
     private SimulationParams simParams;
@@ -29,9 +31,6 @@ public class MolComSim {
     private int messagesCompleted;
     private boolean lastMsgCompleted;
     private int numMessages;
-    //jj
-    private final ArrayList<Molecule> m = new ArrayList<Molecule>();
-
 
     /**
      * Creates a singleton instance of MolComSim
