@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
 public class SimulationParams {
     private static final int ARQ_CODE_LENGTH = 2;
     // movement defaults to be used if movement type not specified in the params file.
@@ -61,22 +60,27 @@ public class SimulationParams {
         movementDefaults.put(MoleculeType.NOISE, MoleculeMovementType.NONE);
     }
 
+    /**
+     * parses command line arguments, stores them in fields args can include
+     * default for type of movement for acknowledgement, information, and
+     * noise molecules (active = starting default for info and ack,
+     * stationary = starting default for noise).
+     * Indicated with: -dmt: (INFO|ACK|NOISE) (ACTIVE|PASSIVE|NONE)
+     * args can include type of Automatic Repeat Request scheme used
+     * (currently none is default, for no acknowledgement molecules,
+     * change to sw11 later).  Indicated with: -arq: (sw)(1..n),(1..m) ,
+     * where sw means stop-and-wait (might implement
+     * other ARQ schemes later, the next integer value represents the
+     * number of information molecules to send (minimum 1), and the next
+     * integer value represents the number of acknowledgement molecules to send.
+     * args can include input file location/name (default: params.dat).
+     * Indicated with: pfile:<string>.
+     * paramsFile must be set up in parseArgs, but not opened for reading.
+     *
+     * @param args command line arguments
+     */
     private void parseArgs(String[] args) {
-		/*parses command line arguments, stores them in fields
-	args can include default for type of movement for acknowledgement, information, 
-	and noise molecules (active = starting default for info and ack, 
-	stationary = starting default for noise).    
-	Indicated with: -dmt: (INFO|ACK|NOISE) (ACTIVE|PASSIVE|NONE) 
-	args can include type of Automatic Repeat Request scheme used 
-	(currently none is default, for no acknowledgement molecules, 
-	change to sw11 later).  Indicated with: -arq: (sw)(1..n),(1..m) , 
-	where sw means stop-and-wait (might implement 
-	other ARQ schemes later, the next integer value represents the 
-	number of information molecules to send (minimum 1), and the next 
-	integer value represents the number of acknowledgement molecules to send.
-	args can include input file location/name (default: params.dat).  
-	Indicated with: pfile:<string>.  
-	paramsFile must be set up in parseArgs, but not opened for reading.*/
+
         int numInfoMols = 0;
         int numAckMols = 0;
 
@@ -117,11 +121,17 @@ public class SimulationParams {
         }
     }
 
-    /* Open params file for reading
-       Reads params from paramsFile (field)
-       Each param type is identified by the first string starting a line,
-       Although its values may extend over multiple lines
-       Stores each param’s value(s) in a private field. */
+
+    /**
+     * Open params file for reading, Reads params from paramsFile (field)
+     * Each param type is identified by the first string starting a line,
+     * Although its values may extend over multiple lines
+     * Stores each param’s value(s) in a private field.
+     *
+     * @param fName command line arguments
+     *
+     * @throws IOException if file not found
+     */
     private void readParamsFile(String fName) throws IOException {
 
         String line;
@@ -129,8 +139,12 @@ public class SimulationParams {
 
         while ((line = br.readLine()) != null) {
             String param = "";
+
             if (!line.equals(""))
                 param = line.substring(line.indexOf(" ") + 1).trim();
+
+      
+
             if (line.startsWith("stepLengthX")) {
                 molRandMoveX = Integer.parseInt(param);
             } else if (line.startsWith("stepLengthY")) {
@@ -147,19 +161,13 @@ public class SimulationParams {
                 maxNumSteps = Integer.parseInt(param);
             } else if (line.startsWith("transmitter")) {
                 transmitterParams.add(
-                        new NanoMachineParam(
-                                new Scanner(
-                                        line.substring(line.indexOf(" ")))));
+                        new NanoMachineParam(new Scanner(line.substring(line.indexOf(" ")))));
             } else if (line.startsWith("receiver")) {
                 receiverParams.add(
-                        new NanoMachineParam(
-                                new Scanner(
-                                        line.substring(line.indexOf(" ")))));
+                        new NanoMachineParam(new Scanner(line.substring(line.indexOf(" ")))));
             } else if (line.startsWith("intermediateNode")) {
                 intermediateNodeParams.add(
-                        new IntermediateNodeParam(
-                                new Scanner(
-                                        line.substring(line.indexOf(" ")))));
+                        new IntermediateNodeParam(new Scanner(line.substring(line.indexOf(" ")))));
             } else if (line.startsWith("numMessages")) {
                 numMessages = Integer.parseInt(param);
             } else if (line.startsWith("numRetransmissions")) {
@@ -178,15 +186,10 @@ public class SimulationParams {
                 probDRail = Double.parseDouble(param);
             } else if (line.startsWith("moleculeParams")) {
                 moleculeParams.add(
-                        new MoleculeParams(
-                                new Scanner(
-                                        line.substring(line.indexOf(" ")))));
-
+                        new MoleculeParams(new Scanner(line.substring(line.indexOf(" ")))));
             } else if (line.startsWith("microtubuleParams")) {
                 microtubuleParams.add(
-                        new MicrotubuleParams(
-                                new Scanner(
-                                        line.substring(line.indexOf(" ")))));
+                        new MicrotubuleParams(new Scanner(line.substring(line.indexOf(" ")))));
             } else if (line.startsWith("outputFile") && !(param.equals("Off"))) {
                 outputFileName = param;
             }
@@ -198,19 +201,16 @@ public class SimulationParams {
     private void setMolDefaultsIfNeeded() {
         if (getInformationMoleculeParams().isEmpty()) {
             moleculeParams.add(
-                    new MoleculeParams(
-                            MoleculeType.INFO, movementDefaults.get(MoleculeType.INFO), 1, 0));
+                    new MoleculeParams(MoleculeType.INFO, movementDefaults.get(MoleculeType.INFO), 1, 0));
         }
         if (useAcknowledgements && getAcknowledgmentMoleculeParams().isEmpty()) {
             moleculeParams.add(
-                    new MoleculeParams(
-                            MoleculeType.ACK, movementDefaults.get(MoleculeType.ACK), 1, 0));
+                    new MoleculeParams(MoleculeType.ACK, movementDefaults.get(MoleculeType.ACK), 1, 0));
         }
     }
 
     public String getOutputFileName() {
         return outputFileName;
-
     }
 
     public int getMediumLength() {
@@ -331,5 +331,4 @@ public class SimulationParams {
     public void setBatchRun(boolean batchRun) {
         this.batchRun = batchRun;
     }
-
 }

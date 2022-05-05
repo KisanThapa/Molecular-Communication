@@ -2,6 +2,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class MolComSim {
@@ -41,6 +42,7 @@ public class MolComSim {
      */
     public static void main(String[] args) throws IOException {
         MolComSim molComSim = createInstance();
+
         molComSim.run(args);
     }
 
@@ -116,8 +118,8 @@ public class MolComSim {
     }
 
     /**
-     * Creates the medium in which the simulation takes place
-     * and places noise molecules inside it
+     * Creates the medium in which the simulation takes place and places
+     * noise molecules inside it
      */
     private void createMedium() {
         //get Medium params, NoiseMolecule params from simParams
@@ -129,11 +131,9 @@ public class MolComSim {
         medium.createMolecules();
     }
 
-
     /**
-     * Creates all nanomachines needed for the simulation
-     * Each nanomachine creates its own information or
-     * acknowledgment molecules
+     * Creates all nano-machines needed for the simulation Each nano-machine
+     * creates its own information or acknowledgment molecules
      */
     private void createNanoMachines() {
         ArrayList<MoleculeParams> ackParams = simParams.getAcknowledgmentMoleculeParams();
@@ -379,6 +379,5 @@ public class MolComSim {
     public FileWriter getOutputFile() {
         return outputFile;
     }
-
 
 }

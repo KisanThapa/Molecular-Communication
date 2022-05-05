@@ -26,5 +26,4 @@ public class AcknowledgementMolecule extends Molecule {
             tx.receiveMolecule(this);
         }
     }
-
 }
